@@ -1,4 +1,4 @@
-package exercises_23_09_23.exercise_04;
+package exercises_23_09_2023.exercise04;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
