@@ -12,7 +12,6 @@ public class Venda {
         this.quantidade = quantidade;
     }
 
-    // getters e setters
     public int getCodigoProduto() {
         return codigoProduto;
     }
@@ -40,5 +39,4 @@ public class Venda {
     public double getValorTotal() {
         return valorUnitario * quantidade;
     }
-
 }

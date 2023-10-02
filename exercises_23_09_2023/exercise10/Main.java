@@ -1,66 +1,77 @@
 package exercises_23_09_2023.exercise10;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        // Declaração das variáveis
-        int[] codigoProduto = new int[10];
-        double[] valorUnitario = new double[10];
-        int[] quantidade = new int[10];
-        double valorTotal = 0.0;
-        int quantidadeTotal = 0;
+        // Declaração de variáveis
+        int codigoProduto, quantidade;
+        double valorUnitario, valorTotal, maiorValor, menorValor, valorMedio;
+
+        // Lista de vendas
         Venda[] vendas = new Venda[10];
 
-        // Entrada dos dados
-        for (int i = 0; i < 10; i++) {
+        // Coleta das vendas
+        for (int i = 0; i < vendas.length; i++) {
             System.out.println("Informe o código do produto: ");
-            codigoProduto[i] = Integer.parseInt(System.console().readLine());
+            codigoProduto = scanner.nextInt();
+
             System.out.println("Informe o valor unitário: ");
-            valorUnitario[i] = Double.parseDouble(System.console().readLine());
+            valorUnitario = scanner.nextDouble();
+
             System.out.println("Informe a quantidade: ");
-            quantidade[i] = Integer.parseInt(System.console().readLine());
+            quantidade = scanner.nextInt();
 
-            // Criação do objeto Venda
-            vendas[i] = new Venda(codigoProduto[i], valorUnitario[i], quantidade[i]);
+            vendas[i] = new Venda(codigoProduto, valorUnitario, quantidade);
+
+            // Calcula o valor total da venda
+            valorTotal = vendas[i].getValorTotal();
+
+            // Exibe o valor total da venda
+            System.out.println("Valor total da venda: " + valorTotal);
         }
 
-        // Processamento dos dados
-        for (int i = 0; i < 10; i++) {
-            // Valor total da venda
-            valorTotal += vendas[i].getValorTotal();
+        // Calcula o valor médio das vendas
+        valorMedio = 0;
+        for (Venda venda : vendas) {
+            valorMedio += venda.getValorTotal();
+        }
+        valorMedio /= vendas.length;
 
-            // Quantidade total de itens vendidos
-            quantidadeTotal += vendas[i].getQuantidade();
+        // Calcula a maior e a menor venda
+        maiorValor = vendas[0].getValorTotal();
+        menorValor = vendas[0].getValorTotal();
+        for (Venda venda : vendas) {
+            if (venda.getValorTotal() > maiorValor) {
+                maiorValor = venda.getValorTotal();
+            } else if (venda.getValorTotal() < menorValor) {
+                menorValor = venda.getValorTotal();
+            }
         }
 
-        // Saída dos dados
-        // Valor total vendido
-        System.out.println("Valor total vendido: " + valorTotal);
+        // Exibe o valor total vendido
+        System.out.println("Valor total vendido: " + valorMedio);
 
-        // Quantidade total de itens vendidos
+        // Exibe a quantidade total de itens vendidos
+        int quantidadeTotal = 0;
+        for (Venda venda : vendas) {
+            quantidadeTotal += venda.getQuantidade();
+        }
         System.out.println("Quantidade total de itens vendidos: " + quantidadeTotal);
 
-        // Valor médio vendido
-        double valorMedio = valorTotal / 10;
-        System.out.println("Valor médio vendido: " + valorMedio);
+        // Exibe o produto com maior venda
+        System.out.println("Produto com maior venda:");
+        System.out.println("Código: " + vendas[0].getCodigoProduto());
+        System.out.println("Quantidade: " + vendas[0].getQuantidade());
+        System.out.println("Valor total: " + vendas[0].getValorTotal());
 
-        // Produto com maior venda
-        Venda vendaMaior = vendas[0];
-        for (int i = 1; i < 10; i++) {
-            if (vendas[i].getValorTotal() > vendaMaior.getValorTotal()) {
-                vendaMaior = vendas[i];
-            }
-        }
-        System.out.println("Produto com maior venda: " + vendaMaior.getCodigoProduto() + ", quantidade: " + vendaMaior.getQuantidade() + ", valor total: " + vendaMaior.getValorTotal());
-
-        // Produto com menor venda
-        Venda vendaMenor = vendas[0];
-        for (int i = 1; i < 10; i++) {
-            if (vendas[i].getValorTotal() < vendaMenor.getValorTotal()) {
-                vendaMenor = vendas[i];
-            }
-        }
-        System.out.println("Produto com menor venda: " + vendaMenor.getCodigoProduto() + ", quantidade: " + vendaMenor.getQuantidade() + ", valor total: " + vendaMenor.getValorTotal());
+        // Exibe o produto com menor venda
+        System.out.println("Produto com menor venda:");
+        System.out.println("Código: " + vendas[9].getCodigoProduto());
+        System.out.println("Quantidade: " + vendas[9].getQuantidade());
+        System.out.println("Valor total: " + vendas[9].getValorTotal());
     }
 }
